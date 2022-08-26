@@ -1,47 +1,42 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import SudokuBoard from './components/SudokuBoard.vue';
+import ResetButton from './components/ResetButton.vue';
+import { useGameStore } from './stores/GameStore';
+import CheckButton from './components/CheckButton.vue';
+
+const board = useGameStore();
+
+document.getElementsByTagName("body")[0].addEventListener("click", function () {
+  const pastEventListener = board.getCurrentEventListener;
+  const pastX = board.getCurrentClickedCell[0];
+  const pastY = board.getCurrentClickedCell[1];
+  document.removeEventListener("keyup", pastEventListener);
+
+  board.clickCell(-1, -1);
+  board.setCurrentEventListener(() => undefined);
+
+  const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
+
+  if (element != null) {
+    element.style.backgroundColor = "white";
+  }
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <SudokuBoard />
+    <div id="bottom-buttons">
+      <ResetButton />
+      <CheckButton />
+    </div>
   </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+#bottom-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
