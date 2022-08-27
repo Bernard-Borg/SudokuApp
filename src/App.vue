@@ -6,7 +6,7 @@ import CheckButton from './components/CheckButton.vue';
 
 const board = useGameStore();
 
-document.getElementsByTagName("body")[0].addEventListener("click", function () {
+function unselectAnyCells() {
   const pastEventListener = board.getCurrentEventListener;
   const pastX = board.getCurrentClickedCell[0];
   const pastY = board.getCurrentClickedCell[1];
@@ -20,7 +20,15 @@ document.getElementsByTagName("body")[0].addEventListener("click", function () {
   if (element != null) {
     element.style.backgroundColor = "white";
   }
+}
+
+document.getElementsByTagName("body")[0].addEventListener("click", function () {
+  unselectAnyCells();
 });
+
+document.addEventListener("keyup", function () {
+
+})
 </script>
 
 <template>

@@ -5,7 +5,7 @@ const boardStore = useGameStore();
 </script>
 
 <template>
-  <div id="sudoku-board">
+  <div id="sudoku-board" :style="{ border: boardStore.getBoardBorder }">
     <SudokuBoardRow v-for="(n, i) in boardStore.getBoardHeight" :key="i" :rowNumber="i" />
   </div>
 </template>
@@ -13,7 +13,6 @@ const boardStore = useGameStore();
 <style>
 #sudoku-board {
   margin: 0 auto;
-  border: 2px solid black;
 }
 
 #sudoku-board>.sudoku-row:nth-child(3),

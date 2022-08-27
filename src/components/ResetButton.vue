@@ -4,17 +4,7 @@ import { useGameStore } from '@/stores/GameStore';
 const boardStore = useGameStore();
 
 function resetBoard() {
-    const pastEventListener = boardStore.getCurrentEventListener;
-    const pastX = boardStore.getCurrentClickedCell[0];
-    const pastY = boardStore.getCurrentClickedCell[1];
-    document.removeEventListener("keyup", pastEventListener);
-
-    const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
-
-    if (element != null) {
-        element.style.backgroundColor = "white";
-    }
-
+    boardStore.clearLastEventListener();
     boardStore.resetBoard();
 }
 </script>

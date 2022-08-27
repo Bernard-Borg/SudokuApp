@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useGameStore } from '@/stores/GameStore';
-import { createSimpleExpression } from '@vue/compiler-core';
 
 const boardStore = useGameStore();
 const VALID_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -10,34 +9,17 @@ enum InvalidType {
 }
 
 function doStuffIfInvalid(invalidType: InvalidType) {
-    const element = document.getElementById("sudoku-board")
-
-    if (element != null) {
-        element.style.border = "5px solid red";
-    }
+    boardStore.changeBoardBorder("4px solid red");
 
     console.log(invalidType);
 }
 
 function doStuffIfValid() {
-    const element = document.getElementById("sudoku-board")
-
-    if (element != null) {
-        element.style.border = "5px solid green";
-    }
+    boardStore.changeBoardBorder("4px solid green");
 }
 
 function checkBoard() {
-    const pastEventListener = boardStore.getCurrentEventListener;
-    const pastX = boardStore.getCurrentClickedCell[0];
-    const pastY = boardStore.getCurrentClickedCell[1];
-    document.removeEventListener("keyup", pastEventListener);
-
-    const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
-
-    if (element != null) {
-        element.style.backgroundColor = "white";
-    }
+    boardStore.clearLastEventListener();
 
     const board = boardStore.getBoard;
 
@@ -82,8 +64,6 @@ function checkBoard() {
     let counter = 0;
     let nonetX = 0;
     let nonetY = 0;
-    console.log("wtf");
-    console.log([...nonet]);
 
     for (let i = 0; i < 81; i++) {
         nonet[nonetY][nonetX] = board[yValues[i]][xValues[i]];
