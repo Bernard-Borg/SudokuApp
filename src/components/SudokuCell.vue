@@ -7,21 +7,11 @@ const props = defineProps<{
 	y: number;
 }>();
 
-const VALID_NUMBERS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-function handleCellNumberEntering(event: KeyboardEvent) {
-	if (VALID_NUMBERS.includes(event.key)) {
-		board.changeBoardValue(props.x, props.y, parseInt(event.key));
-	}
-}
-
 function handleClick(event: MouseEvent) {
 	//Line below to stop click event from also firing document click event
 	event.stopPropagation();
 
-	board.clearLastEventListener();
-	board.clickCell(props.x, props.y);
-	board.setCurrentEventListener(handleCellNumberEntering);
+	board.focusCell(props.x, props.y);
 }
 </script>
 

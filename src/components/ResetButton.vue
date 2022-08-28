@@ -4,7 +4,6 @@ import { useGameStore } from '@/stores/GameStore';
 const boardStore = useGameStore();
 
 function resetBoard() {
-    boardStore.clearLastEventListener();
     boardStore.resetBoard();
 }
 </script>

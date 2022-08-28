@@ -6,26 +6,10 @@ import CheckButton from './components/CheckButton.vue';
 
 const board = useGameStore();
 
-function unselectAnyCells() {
-  // const pastEventListener = board.getCurrentEventListener;
-  // const pastX = board.getCurrentClickedCell[0];
-  // const pastY = board.getCurrentClickedCell[1];
-  // document.removeEventListener("keyup", pastEventListener);
-
-  // board.clickCell(-1, -1);
-  // board.setCurrentEventListener(() => undefined);
-
-  // const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
-
-  // if (element != null) {
-  //   element.style.backgroundColor = "white";
-  // }
-  board.clickCell(-1, -1);
-  board.clearLastEventListener();
-}
+const VALID_NUMBERS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 document.getElementsByTagName("body")[0].addEventListener("click", function () {
-  unselectAnyCells();
+  board.focusCell(-1, -1);
 });
 
 document.addEventListener("keyup", function (event: KeyboardEvent) {
@@ -37,6 +21,8 @@ document.addEventListener("keyup", function (event: KeyboardEvent) {
     board.moveClickedCellRight();
   } else if (event.key == "ArrowDown") {
     board.moveClickedCellDown();
+  } else if (VALID_NUMBERS.includes(event.key)) {
+    board.changeBoardValue(parseInt(event.key));
   }
 });
 </script>

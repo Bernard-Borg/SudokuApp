@@ -13,7 +13,6 @@ export class CellCoordinate {
 const defaultState = {
   board: new Array<Array<number>>(9).fill([]).map(() => Array(9).fill(-1)) as Array<Array<number>>,
   currentClickCell: new CellCoordinate(-1, -1),
-  currentEventListener: () => undefined,
   boardBorder: "4px solid black"
 }
 
@@ -22,7 +21,6 @@ export const useGameStore = defineStore({
   state: () => ({
     board: structuredClone(defaultState.board) as number[][],
     currentClickCell: structuredClone(defaultState.currentClickCell) as CellCoordinate,
-    currentEventListener: defaultState.currentEventListener,
     boardBorder: defaultState.boardBorder
   }),
   getters: {
@@ -31,17 +29,18 @@ export const useGameStore = defineStore({
     getBoardWidth: (state) => state.board[0].length,
     getBoardCell: (state) => (x: number, y: number) => state.board[y][x],
     getCurrentClickedCell: (state) => [state.currentClickCell.x, state.currentClickCell.y],
-    getCurrentEventListener: (state) => state.currentEventListener,
     getBoardBorder: (state) => state.boardBorder,
     cellColor: (state) => (x: number, y: number) => state.currentClickCell.x == x && state.currentClickCell.y == y ? "#ddffdd" : "white"
   },
   actions: {
-    changeBoardValue(x: number, y: number, newValue: number) {
-      this.board[y][x] = newValue;
+    changeBoardValue(newValue: number) {
+      if (this.currentClickCell.x != -1 && this.currentClickCell.y != -1) {
+        this.board[this.currentClickCell.y][this.currentClickCell.x] = newValue;
 
-      this.$patch({
-        board: this.board,
-      });
+        this.$patch({
+          board: this.board,
+        });
+      }
     },
     changeBoardBorder(newBorder: string) {
       this.$patch({
@@ -58,9 +57,7 @@ export const useGameStore = defineStore({
         currentY--;
       }
 
-      this.$patch({
-        currentClickCell: new CellCoordinate(currentX, currentY)
-      });
+      this.focusCell(currentX, currentY);
     },
     moveClickedCellLeft() {
       let currentX = this.currentClickCell.x;
@@ -78,9 +75,7 @@ export const useGameStore = defineStore({
         currentX--;
       }
 
-      this.$patch({
-        currentClickCell: new CellCoordinate(currentX, currentY)
-      });
+      this.focusCell(currentX, currentY);
     },
     moveClickedCellDown() {
       const currentX = this.currentClickCell.x;
@@ -92,9 +87,7 @@ export const useGameStore = defineStore({
         currentY++;
       }
 
-      this.$patch({
-        currentClickCell: new CellCoordinate(currentX, currentY)
-      });
+      this.focusCell(currentX, currentY);
     },
     moveClickedCellRight() {
       let currentX = this.currentClickCell.x;
@@ -112,28 +105,12 @@ export const useGameStore = defineStore({
         currentX++;
       }
 
-      this.$patch({
-        currentClickCell: new CellCoordinate(currentX, currentY)
-      });
+      this.focusCell(currentX, currentY);
     },
-    clickCell(x: number, y: number) {
+    focusCell(x: number, y: number) {
       this.$patch({
         currentClickCell: new CellCoordinate(x, y)
       });
-    },
-    setCurrentEventListener(eventListener: (event: KeyboardEvent) => void) {
-      document.addEventListener("keyup", eventListener);
-
-      this.$patch({
-        currentEventListener: eventListener
-      })
-    },
-    clearLastEventListener() {
-      document.removeEventListener("keyup", this.currentEventListener);
-
-      this.$patch({
-        currentEventListener: defaultState.currentEventListener
-      })
     },
     resetBoard() {
       this.$reset();

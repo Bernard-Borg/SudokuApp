@@ -19,8 +19,6 @@ function doStuffIfValid() {
 }
 
 function checkBoard() {
-    boardStore.clearLastEventListener();
-
     const board = boardStore.getBoard;
 
     for (const row of board) {
