@@ -100,7 +100,7 @@ function checkBoard() {
 </script>
 
 <template>
-    <button id="check-button" @click="checkBoard">Check</button>
+    <button id="check-button" @click="checkBoard">Check Board</button>
 </template>
 
 <style>

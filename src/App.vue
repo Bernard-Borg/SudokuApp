@@ -7,28 +7,38 @@ import CheckButton from './components/CheckButton.vue';
 const board = useGameStore();
 
 function unselectAnyCells() {
-  const pastEventListener = board.getCurrentEventListener;
-  const pastX = board.getCurrentClickedCell[0];
-  const pastY = board.getCurrentClickedCell[1];
-  document.removeEventListener("keyup", pastEventListener);
+  // const pastEventListener = board.getCurrentEventListener;
+  // const pastX = board.getCurrentClickedCell[0];
+  // const pastY = board.getCurrentClickedCell[1];
+  // document.removeEventListener("keyup", pastEventListener);
 
+  // board.clickCell(-1, -1);
+  // board.setCurrentEventListener(() => undefined);
+
+  // const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
+
+  // if (element != null) {
+  //   element.style.backgroundColor = "white";
+  // }
   board.clickCell(-1, -1);
-  board.setCurrentEventListener(() => undefined);
-
-  const element = document.getElementById(`sudoku-cell-${pastX}-${pastY}`);
-
-  if (element != null) {
-    element.style.backgroundColor = "white";
-  }
+  board.clearLastEventListener();
 }
 
 document.getElementsByTagName("body")[0].addEventListener("click", function () {
   unselectAnyCells();
 });
 
-document.addEventListener("keyup", function () {
-
-})
+document.addEventListener("keyup", function (event: KeyboardEvent) {
+  if (event.key == "ArrowUp") {
+    board.moveClickedCellUp();
+  } else if (event.key == "ArrowLeft") {
+    board.moveClickedCellLeft();
+  } else if (event.key == "ArrowRight") {
+    board.moveClickedCellRight();
+  } else if (event.key == "ArrowDown") {
+    board.moveClickedCellDown();
+  }
+});
 </script>
 
 <template>

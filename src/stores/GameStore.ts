@@ -48,6 +48,74 @@ export const useGameStore = defineStore({
         boardBorder: newBorder
       })
     },
+    moveClickedCellUp() {
+      const currentX = this.currentClickCell.x;
+      let currentY = this.currentClickCell.y;
+
+      if (currentY == 0) {
+        currentY = 8;
+      } else {
+        currentY--;
+      }
+
+      this.$patch({
+        currentClickCell: new CellCoordinate(currentX, currentY)
+      });
+    },
+    moveClickedCellLeft() {
+      let currentX = this.currentClickCell.x;
+      let currentY = this.currentClickCell.y;
+
+      if (currentX == 0) {
+        currentX = 8;
+
+        if (currentY == 0) {
+          currentY = 8;
+        } else {
+          currentY--;
+        }
+      } else {
+        currentX--;
+      }
+
+      this.$patch({
+        currentClickCell: new CellCoordinate(currentX, currentY)
+      });
+    },
+    moveClickedCellDown() {
+      const currentX = this.currentClickCell.x;
+      let currentY = this.currentClickCell.y;
+
+      if (currentY == 8) {
+        currentY = 0;
+      } else {
+        currentY++;
+      }
+
+      this.$patch({
+        currentClickCell: new CellCoordinate(currentX, currentY)
+      });
+    },
+    moveClickedCellRight() {
+      let currentX = this.currentClickCell.x;
+      let currentY = this.currentClickCell.y;
+
+      if (currentX == 8) {
+        currentX = 0;
+
+        if (currentY == 8) {
+          currentY = 0;
+        } else {
+          currentY++;
+        }
+      } else {
+        currentX++;
+      }
+
+      this.$patch({
+        currentClickCell: new CellCoordinate(currentX, currentY)
+      });
+    },
     clickCell(x: number, y: number) {
       this.$patch({
         currentClickCell: new CellCoordinate(x, y)
