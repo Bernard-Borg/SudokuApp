@@ -117,9 +117,11 @@ export const useGameStore = defineStore({
       this.focusCell(currentX, currentY);
     },
     focusCell(x: number, y: number) {
-      this.$patch({
-        currentClickCell: new CellCoordinate(x, y)
-      });
+      if (this.cellEnabled(x, y)) {
+        this.$patch({
+          currentClickCell: new CellCoordinate(x, y)
+        });
+      }
     },
     generateNewBoard(difficultyLevel: DifficultyLevel) {
       const tempBoard = [

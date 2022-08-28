@@ -3,6 +3,7 @@ import SudokuBoard from './components/SudokuBoard.vue';
 import ResetButton from './components/ResetButton.vue';
 import { DifficultyLevel, useGameStore } from './stores/GameStore';
 import CheckButton from './components/CheckButton.vue';
+import GenerateBoardControl from './components/GenerateBoardControl.vue';
 
 const board = useGameStore();
 
@@ -33,8 +34,9 @@ board.generateNewBoard(DifficultyLevel.EASY);
   <main>
     <SudokuBoard />
     <div id="bottom-buttons">
-      <ResetButton />
       <CheckButton />
+      <GenerateBoardControl />
+      <ResetButton />
     </div>
   </main>
 </template>
