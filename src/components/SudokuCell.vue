@@ -8,10 +8,11 @@ const props = defineProps<{
 }>();
 
 function handleClick(event: MouseEvent) {
-	//Line below to stop click event from also firing document click event
-	event.stopPropagation();
+	if (board.cellEnabled(props.x, props.y)) {
+		event.stopPropagation(); //Stop click event from also firing document click event
 
-	board.focusCell(props.x, props.y);
+		board.focusCell(props.x, props.y);
+	}
 }
 </script>
 

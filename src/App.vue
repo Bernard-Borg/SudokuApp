@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SudokuBoard from './components/SudokuBoard.vue';
 import ResetButton from './components/ResetButton.vue';
-import { useGameStore } from './stores/GameStore';
+import { DifficultyLevel, useGameStore } from './stores/GameStore';
 import CheckButton from './components/CheckButton.vue';
 
 const board = useGameStore();
@@ -25,6 +25,8 @@ document.addEventListener("keyup", function (event: KeyboardEvent) {
     board.changeBoardValue(parseInt(event.key));
   }
 });
+
+board.generateNewBoard(DifficultyLevel.EASY);
 </script>
 
 <template>
