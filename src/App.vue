@@ -23,7 +23,9 @@ document.addEventListener("keyup", function (event: KeyboardEvent) {
   } else if (event.key == "ArrowDown") {
     board.moveClickedCellDown();
   } else if (VALID_NUMBERS.includes(event.key)) {
-    board.changeBoardValue(parseInt(event.key));
+    if (board.cellEnabled(board.getCurrentClickedCell[0], board.getCurrentClickedCell[1])) {
+      board.changeBoardValue(parseInt(event.key));
+    }
   }
 });
 
