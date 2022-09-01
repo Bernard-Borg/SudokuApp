@@ -30,9 +30,9 @@ function shuffle(array) {
     return array;
 }
 
-function fillGrid(board) {
-    let row;
-    let col;
+function solveGrid(board: number[][]) {
+    let row = 0;
+    let col = 0;
 
     for (let i = 0; i < 81; i++) {
         row = Math.floor(i / 9);
@@ -74,9 +74,10 @@ function fillGrid(board) {
                             board[row][col] = value;
 
                             if (checkGrid(board)) {
-                                return true;
+                                counter += 1;
+                                break;
                             } else {
-                                if (fillGrid(board)) {
+                                if (solveGrid(board)) {
                                     return true;
                                 }
                             }
@@ -92,10 +93,10 @@ function fillGrid(board) {
     board[row][col] = -1;
 }
 
-function solveGrid(board) {
+function fillGrid(board: number[][]) {
     const VALID_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    let row;
-    let col;
+    let row = 0;
+    let col = 0;
 
     for (let i = 0; i < 81; i++) {
         row = Math.floor(i / 9);
@@ -137,10 +138,9 @@ function solveGrid(board) {
                             board[row][col] = value;
 
                             if (checkGrid(board)) {
-                                counter += 1;
-                                break;
+                                return true;
                             } else {
-                                if (solveGrid(board)) {
+                                if (fillGrid(board)) {
                                     return true;
                                 }
                             }

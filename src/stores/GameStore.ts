@@ -49,6 +49,7 @@ function shuffle(array: number[]) {
 }
 
 function fillGrid(board: number[][]) {
+  const VALID_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   let row = 0;
   let col = 0;
 
@@ -57,7 +58,7 @@ function fillGrid(board: number[][]) {
     col = i % 9;
 
     if (board[row][col] == -1) {
-      for (let value = 1; value < 10; value++) {
+      for (const value of shuffle(VALID_NUMBERS)) {
         if (!board[row].includes(value)) {
           if (![board[0][col], board[1][col], board[2][col], board[3][col], board[4][col], board[5][col], board[6][col], board[7][col], board[8][col]].includes(value)) {
             let square = [] as number[][]
@@ -111,7 +112,6 @@ function fillGrid(board: number[][]) {
 }
 
 function solveGrid(board: number[][]) {
-  const VALID_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   let row = 0;
   let col = 0;
 
@@ -120,7 +120,7 @@ function solveGrid(board: number[][]) {
     col = i % 9;
 
     if (board[row][col] == -1) {
-      for (const value of shuffle(VALID_NUMBERS)) {
+      for (let value = 1; value < 10; value++) {
         if (!board[row].includes(value)) {
           if (![board[0][col], board[1][col], board[2][col], board[3][col], board[4][col], board[5][col], board[6][col], board[7][col], board[8][col]].includes(value)) {
             let square = [] as number[][]
@@ -306,11 +306,11 @@ export const useGameStore = defineStore({
       let attempts = 0;
 
       if (difficultyLevel == DifficultyLevel.EASY) {
-        attempts = 4;
+        attempts = 3;
       } else if (difficultyLevel == DifficultyLevel.MEDIUM) {
-        attempts = 8;
+        attempts = 6;
       } else {
-        attempts = 14;
+        attempts = 9;
       }
 
       while (attempts > 0) {
@@ -356,7 +356,7 @@ export const useGameStore = defineStore({
         }
       }
 
-      fillGrid(copyGrid);
+      solveGrid(copyGrid);
 
       this.$patch({
         board: tempBoard,
