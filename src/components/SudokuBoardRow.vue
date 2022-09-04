@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { useGameStore } from "@/stores/GameStore";
 import SudokuCell from "./SudokuCell.vue";
-defineProps<{
+const props = defineProps<{
   rowNumber: number;
+  isMain: boolean;
 }>();
+
+console.log("Abababa: " + props.isMain);
 
 const boardStore = useGameStore();
 </script>
 
 <template>
   <div class="sudoku-row">
-    <SudokuCell v-for="(n, i) in boardStore.getBoardWidth" :key="i" :x="i" :y="rowNumber" />
+    <SudokuCell v-for="(n, i) in boardStore.getBoardWidth" :key="i" :x="i" :y="props.rowNumber"
+      :isMain="props.isMain" />
   </div>
 </template>
 

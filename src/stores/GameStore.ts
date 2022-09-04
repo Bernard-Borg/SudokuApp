@@ -356,7 +356,7 @@ export const useGameStore = defineStore({
         }
       }
 
-      solveGrid(copyGrid);
+      fillGrid(copyGrid);
 
       this.$patch({
         board: tempBoard,

@@ -36,7 +36,7 @@ board.generateNewBoard(DifficultyLevel.EASY);
 <template>
   <main>
     <HintButton />
-    <SudokuBoard />
+    <SudokuBoard :isMain="true" />
     <div id="bottom-buttons">
       <CheckButton />
       <GenerateBoardControl />

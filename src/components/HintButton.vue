@@ -1,15 +1,28 @@
 <script setup lang="ts">
-import { useGameStore } from "@/stores/GameStore";
-
-const boardStore = useGameStore();
+import SudokuBoard from "./SudokuBoard.vue";
 
 function showSolvedBoard() {
-    console.log(boardStore.getSolvedBoard);
+    const solvedBoardElement = document.getElementById("solved-board");
+    
+    if (solvedBoardElement != null) {
+        solvedBoardElement.style.display = "block";
+    }
+}
+
+function hideSolvedBoard() {
+    const solvedBoardElement = document.getElementById("solved-board");
+    
+    if (solvedBoardElement != null) {
+        solvedBoardElement.style.display = "none";
+    }
 }
 </script>
     
 <template>
-    <button id="hint-button" @click="showSolvedBoard">?</button>
+    <button id="hint-button" @mouseover="showSolvedBoard" @mouseleave="hideSolvedBoard">?</button>
+    <div id="solved-board">
+        <SudokuBoard :isMain="false" />
+    </div>
 </template>
         
 <style>
@@ -26,5 +39,21 @@ button#hint-button {
     top: 0;
     left: 95%;
     margin-bottom: 15px;
+}
+
+#solved-board {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 2px 2px grey, -2px -2px grey;
+    border-radius: 10px;
+    display: none;
+}
+
+#solved-board .sudoku-cell {
+    width: 2px;
+    height: 2px;
 }
 </style>

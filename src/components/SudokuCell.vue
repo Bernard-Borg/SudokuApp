@@ -5,18 +5,22 @@ const board = useGameStore();
 const props = defineProps<{
 	x: number;
 	y: number;
+	isMain: boolean;
 }>();
 
 function handleClick(event: MouseEvent) {
 	event.stopPropagation(); //Stop click event from also firing document click event
 	board.focusCell(props.x, props.y);
 }
+
+console.log(board.getSolvedBoard);
 </script>
 
 <template>
 	<div :id="`sudoku-cell-${x}-${y}`" class="sudoku-cell" @click="handleClick"
 		:style="{ backgroundColor: board.cellColor(x, y) }">
-		{{ board.getBoard[y][x] > 0 ? board.getBoard[y][x] : "" }}
+		{{ isMain ? board.getBoard[y][x] > 0 ? board.getBoard[y][x] : "" :
+		board.getSolvedBoard[y][x] > 0 ? board.getSolvedBoard[y][x] : ""}}
 	</div>
 </template>
 
