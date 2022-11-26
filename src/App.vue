@@ -11,44 +11,44 @@ const board = useGameStore();
 const VALID_NUMBERS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 document.getElementsByTagName("body")[0].addEventListener("click", function () {
-  board.focusCell(-1, -1);
+    board.focusCell(-1, -1);
 });
 
 document.addEventListener("keyup", function (event: KeyboardEvent) {
-  if (event.key == "ArrowUp") {
-    board.moveClickedCellUp();
-  } else if (event.key == "ArrowLeft") {
-    board.moveClickedCellLeft();
-  } else if (event.key == "ArrowRight") {
-    board.moveClickedCellRight();
-  } else if (event.key == "ArrowDown") {
-    board.moveClickedCellDown();
-  } else if (VALID_NUMBERS.includes(event.key)) {
-    if (board.cellEnabled(board.getCurrentClickedCell[0], board.getCurrentClickedCell[1])) {
-      board.changeBoardValue(parseInt(event.key));
+    if (event.key == "ArrowUp") {
+        board.moveClickedCellUp();
+    } else if (event.key == "ArrowLeft") {
+        board.moveClickedCellLeft();
+    } else if (event.key == "ArrowRight") {
+        board.moveClickedCellRight();
+    } else if (event.key == "ArrowDown") {
+        board.moveClickedCellDown();
+    } else if (VALID_NUMBERS.includes(event.key)) {
+        if (board.cellEnabled(board.getCurrentClickedCell[0], board.getCurrentClickedCell[1])) {
+            board.changeBoardValue(parseInt(event.key));
+        }
     }
-  }
 });
 
 board.generateNewBoard(DifficultyLevel.EASY);
 </script>
 
 <template>
-  <main>
-    <HintButton />
-    <SudokuBoard :isMain="true" />
-    <div id="bottom-buttons">
-      <CheckButton />
-      <GenerateBoardControl />
-      <ResetButton />
-    </div>
-  </main>
+    <main>
+        <HintButton />
+        <SudokuBoard :isMain="true" />
+        <div id="bottom-buttons">
+            <CheckButton />
+            <GenerateBoardControl />
+            <ResetButton />
+        </div>
+    </main>
 </template>
 
 <style>
 #bottom-buttons {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-evenly;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-evenly;
 }
 </style>

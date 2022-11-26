@@ -12,15 +12,14 @@ function handleClick(event: MouseEvent) {
 	event.stopPropagation(); //Stop click event from also firing document click event
 	board.focusCell(props.x, props.y);
 }
-
-console.log(board.getSolvedBoard);
 </script>
 
 <template>
 	<div :id="`sudoku-cell-${x}-${y}`" class="sudoku-cell" @click="handleClick"
-		:style="{ backgroundColor: board.cellColor(x, y) }">
+		:style="{ backgroundColor: board.cellColor(x, y, props.isMain) }">
 		{{ isMain ? board.getBoard[y][x] > 0 ? board.getBoard[y][x] : "" :
-		board.getSolvedBoard[y][x] > 0 ? board.getSolvedBoard[y][x] : ""}}
+				board.getSolvedBoard[y][x] > 0 ? board.getSolvedBoard[y][x] : ""
+		}}
 	</div>
 </template>
 
